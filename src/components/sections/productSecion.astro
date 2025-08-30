@@ -1,6 +1,6 @@
 ---
 import ProductCard from "../Cards/ProductCard.astro";
-const url = "../../../public/algo.jpeg"
+const url = "/"
 
 ---
 <section class="py-16 bg-gray-50">
@@ -13,13 +13,13 @@ const url = "../../../public/algo.jpeg"
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <ProductCard 
-                imagen={url}
+                imagen={url+"algo.jpeg"}
                 title="Accesorios decorativos" 
                 description="Impresión de carteles en alta calidad para eventos, promociones, conciertos y más. Perfectos para llamar la atención de tu audiencia." 
                 buttonText="Ver más" 
             />
             <ProductCard 
-                imagen={url}
+                imagen={url+"miniaturas/miniatura.jpeg"}
                 title="Figuras de acción" 
                 description="Diseño e impresión profesional de folletos para presentaciones, informes, catálogos y material promocional." 
                 buttonText="Ver más" 
