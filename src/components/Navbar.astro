@@ -1,3 +1,27 @@
+<script>
+if (typeof document !== 'undefined') {
+    const mobileMenuButton = document.querySelector<HTMLButtonElement>('[data-menu-button]');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuLinks = document.querySelectorAll<HTMLAnchorElement>('[data-menu-link]');
+
+        function toggleMenu() {
+            mobileMenu?.classList.toggle('hidden');
+        mobileMenu?.classList.toggle('flex');
+        
+        // Update aria-expanded attribute
+        const isExpanded = mobileMenuButton?.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton?.setAttribute('aria-expanded', String(!isExpanded));
+    }
+    
+    // Add event listeners
+    mobileMenuButton?.addEventListener('click', toggleMenu);
+    
+    // Close menu when clicking on links
+    mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', toggleMenu);
+    });
+}
+</script>
 
 <style>
     @keyframes gradient {
@@ -19,21 +43,62 @@
     .gradient-text:hover {
         animation: gradient 1.5s ease infinite;
     }
+    
+    /* Mobile menu */
+    .mobile-menu {
+        transition: all 0.3s ease-in-out;
+        margin-left: -1.5rem;
+        margin-right: -1.5rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        background-color: white;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
 </style>
 
 <nav class="bg-white shadow-lg rounded-xl max-w-7xl px-6 py-2 z-50 fixed left-1/2 top-4 -translate-x-1/2 w-[calc(100%-2rem)]">
-    <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="text-2xl mb-2 md:mb-0">
+    <div class="flex justify-between items-center">
+        <!-- Logo -->
+        <div class="text-2xl">
             <h1 class="font-bold">
                 <a href="/" class="gradient-text hover:opacity-90 transition-opacity">
                     Printur3D
                 </a>
             </h1>
         </div>
-        <ul class="flex gap-6 text-blue-700 text-xl font-medium py-2">
-            <li><a href="/" class="hover:text-blue-900 transition-colors font-medium">Inicio</a></li>
-            <li><a href="/nosotros" class="hover:text-blue-900 transition-colors font-medium">Nosotros</a></li>
-            <li><a href="/contacto" class="hover:text-blue-900 transition-colors font-medium">Contacto</a></li>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:block">
+            <ul class="flex gap-6 text-blue-700 text-xl font-medium">
+                <li><a href="/" class="hover:text-blue-900 transition-colors py-2 block">Inicio</a></li>
+                <li><a href="/nosotros" class="hover:text-blue-900 transition-colors py-2 block">Quienes somos</a></li>
+                <li><a href="/contacto" class="hover:text-blue-900 transition-colors py-2 block">Contactame</a></li>
+            </ul>
+        </div>
+
+        <!-- Mobile menu button -->
+        <div class="md:hidden">
+            <button 
+                type="button" 
+                class="text-blue-700 hover:text-blue-900 focus:outline-none"
+                data-menu-button
+                aria-label="Toggle menu"
+                aria-expanded="false"
+                aria-controls="mobile-menu"
+            >
+                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="hidden md:hidden mobile-menu">
+        <ul class="flex flex-col gap-4 text-blue-700 text-lg font-medium py-4">
+            <li><a href="/" class="hover:text-blue-900 transition-colors py-2 block" data-menu-link>Inicio</a></li>
+            <li><a href="/nosotros" class="hover:text-blue-900 transition-colors py-2 block" data-menu-link>Quienes somos</a></li>
+            <li><a href="/contacto" class="hover:text-blue-900 transition-colors py-2 block" data-menu-link>Contactame</a></li>
         </ul>
     </div>
 </nav>

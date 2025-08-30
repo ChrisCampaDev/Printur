@@ -1,43 +1,46 @@
 
-<section class="relative bg-gradient-to-r from-blue-900 to-blue-700 text-white overflow-hidden min-h-[calc(100vh-10rem)] flex items-center">
-  <!-- Animated background elements -->
-  <div class="absolute inset-0 opacity-10">
-    <div class="absolute inset-0 bg-grid-pattern"></div>
-  </div>
+<section class="relative bg-cover bg-center text-white overflow-hidden min-h-screen flex items-center" style="background-image: linear-gradient(to right, rgba(30, 58, 138, 0.9), rgba(30, 64, 175, 0.8)), url('/assets/3dbanner.jpg');">
+  <!-- Gradient overlay for better text readability -->
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-900/30 to-blue-900/70"></div>
   
   <div class="relative max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
     <div class="text-center max-w-4xl mx-auto">
       <!-- Main heading with fade-in animation -->
       <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight fade-in">
-        Impresiones que <span class="text-yellow-400">inspiran</span>
+        Printur3D
+        </br> 
+        <span class="text-yellow-400">Taller de impresión 3D y diseño</span>
       </h1>
       
       <!-- Subheading with staggered animation -->
-      <p class="mt-6 mx-auto text-lg sm:text-xl text-blue-100 max-w-2xl fade-in fade-in-delay-1">
-        Transformamos tus ideas en impresiones de alta calidad. Desde tarjetas de visita hasta grandes formatos, hacemos que tu marca destaque.
+      <p class="mt-6 mx-auto text-lg sm:text-2xl text-blue-100 max-w-2xl fade-in fade-in-delay-1">
+        Creamos soluciones y recuerdos en 3D.
+        Desde prototipos útiles y decorativos hasta regalos.
+        Diseñamos, modelamos e imprimimos lo que imaginas.</br>
+        ¡Y lo volvemos realidad en Printur3D!
       </p>
       
       <!-- Buttons with staggered animations -->
       <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center fade-in fade-in-delay-2">
         <a 
-          href="/contacto" 
-          class="px-6 sm:px-8 py-3 sm:py-4 border-2 border-transparent text-base sm:text-lg font-medium rounded-md text-blue-800 bg-yellow-400 hover:bg-yellow-300 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-blue-900"
+        href="/contacto" 
+        class="px-6 sm:px-8 py-3 sm:py-4 border-2 border-transparent text-white sm:text-lg font-medium rounded-md bg-indigo-400 hover:bg-indigo-300 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-blue-900"
         >
-          Solicitar cotización
+        📲 Escríbenos tu idea
         </a>
         <a 
           href="#servicios" 
-          class="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white/20 text-base sm:text-lg font-medium rounded-md text-white bg-blue-500/60 hover:bg-blue-500/80 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-900"
+          class="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white/20 text-white sm:text-lg font-medium rounded-md bg-blue-500/60 hover:bg-blue-500/80 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-900"
         >
           Ver servicios
         </a>
       </div>
       
       <!-- Scroll indicator -->
-      <div class="mt-16 fade-in fade-in-delay-3">
+      <div class="mt-20 fade-in fade-in-delay-3">
         <a 
           href="#servicios" 
-          class="inline-flex flex-col items-center text-blue-200 hover:text-white transition-colors group"
+          class="inline-flex flex-col items-center text-white hover:text-white transition-colors group"
           aria-label="Desplazarse hacia abajo"
         >
           <span class="text-sm font-medium mb-2">Desplazarse</span>
@@ -85,10 +88,7 @@
     animation-delay: 4s;
   }
   
-  .bg-grid-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  }
-  
+
   /* Responsive adjustments */
   @media (max-width: 640px) {
     .text-4xl {

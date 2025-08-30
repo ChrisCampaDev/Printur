@@ -5,22 +5,54 @@ interface Props {
   stepNumber: number;
   class?: string;
   'data-step'?: number;
+  id?: string;
 }
 
-const { title, description, stepNumber, class: className = '' } = Astro.props as Props;
+const { 
+  title, 
+  description, 
+  stepNumber, 
+  class: className = '',
+  id = `workcard-${Math.random().toString(36).substr(2, 9)}`
+} = Astro.props as Props;
 ---
 
-<button 
-  class={`flex flex-col items-start p-6 rounded-xl transition-all duration-300 text-left ${
-    'bg-white text-gray-700 hover:bg-gray-50'
+<article
+  id={id}
+  class={`flex flex-col items-start p-6 rounded-xl transition-all duration-300 text-left border-2 border-blue-100 shadow-lg ${
+    'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none'
   } ${className}`}
   data-step={stepNumber}
+  tabindex="0"
+  aria-labelledby={`${id}-title`}
+  aria-describedby={`${id}-desc`}
+  itemscope 
+  itemtype="https://schema.org/CreativeWork"
 >
-  <span class={`inline-flex items-center justify-center w-10 h-10 rounded-full mb-4 ${
-    'bg-blue-500 text-white'
-  }`}>
-    {stepNumber}
-  </span>
-  <h3 class="text-lg font-semibold mb-2">{title}</h3>
-  <p class="text-sm">{description}</p>
-</button>
+  <div 
+    class={`inline-flex items-center justify-center w-10 h-10 rounded-full mb-4 ${
+      'bg-blue-600 text-white'
+    }`}
+    aria-hidden="true"
+  >
+    <span class="font-medium">{stepNumber}</span>
+  </div>
+  
+  <h3 
+    id={`${id}-title`}
+    class="text-xl font-semibold mb-2"
+    itemprop="name"
+  >
+    {title}
+  </h3>
+  
+  <p 
+    id={`${id}-desc`}
+    class="text-lg text-gray-700"
+    itemprop="description"
+  >
+    {description}
+  </p>
+  
+  <span class="sr-only">Paso {stepNumber} de 4</span>
+</article>

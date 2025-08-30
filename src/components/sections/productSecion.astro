@@ -1,32 +1,64 @@
 ---
 import ProductCard from "../Cards/ProductCard.astro";
+const url = "../../../public/algo.jpeg"
+
 ---
 <section class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Nuestros Productos</h2>
             <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-                En Printur, ofrecemos una amplia gama de productos impresos para satisfacer las necesidades de nuestros clientes. 
-                Desde carteles y folletos hasta tarjetas y más, contamos con los equipos y tecnología necesarios para brindarte la mejor calidad en impresión.
+                Servicio de impresión 3D y diseño especializados en la rapidez, calidad, exclusividad y personalización de nuestros productos.
             </p>
         </div>
-        
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <ProductCard 
-                title="Carteles" 
+                imagen={url}
+                title="Accesorios decorativos" 
                 description="Impresión de carteles en alta calidad para eventos, promociones, conciertos y más. Perfectos para llamar la atención de tu audiencia." 
                 buttonText="Ver más" 
             />
             <ProductCard 
-                title="Folletos" 
+                imagen={url}
+                title="Figuras de acción" 
                 description="Diseño e impresión profesional de folletos para presentaciones, informes, catálogos y material promocional." 
                 buttonText="Ver más" 
             />
             <ProductCard 
-                title="Tarjetas" 
-                description="Tarjetas de presentación, invitaciones y más. Personalizables con diferentes acabados y materiales de alta calidad." 
+                imagen={url}       
+                title="Accesorios Empresariales" 
+                description="Impresión de maquetas en alta calidad para eventos, promociones, conciertos y más. Perfectos para llamar la atención de tu audiencia." 
                 buttonText="Ver más" 
             />
+            <ProductCard 
+                imagen={url}       
+                title="Accesorios Empresariales" 
+                description="Impresión de maquetas en alta calidad para eventos, promociones, conciertos y más. Perfectos para llamar la atención de tu audiencia." 
+                buttonText="Ver más" 
+            />
+            <ProductCard 
+                imagen={url}       
+                title="Accesorios Empresariales" 
+                description="Impresión de maquetas en alta calidad para eventos, promociones, conciertos y más. Perfectos para llamar la atención de tu audiencia." 
+                buttonText="Ver más" 
+            />
+            <ProductCard 
+                imagen={url}       
+                title="Accesorios Empresariales" 
+                description="Impresión de maquetas en alta calidad para eventos, promociones, conciertos y más. Perfectos para llamar la atención de tu audiencia." 
+                buttonText="Ver más" 
+            />
+
         </div>
-    </div>
+        <div class="flex items-center justify-center mt-10">
+            <span class="text-6xl font-black">📬</span>
+            <p class="ml-4 text-xl text-gray-600 max-w-3xl text-center">
+                Contamos con servicio a domicilio en 
+                <span class="font-bold text-blue-600">
+                    Playas, Marianao, Cerro, Boyero y Vedado
+                </span>
+                para entregar tus pedidos con la rapidez y profesionalizacion que esperas.
+            </p>
+        </div>
+    </div>  
 </section>
