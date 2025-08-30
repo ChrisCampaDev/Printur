@@ -1,0 +1,32 @@
+---
+import ProductCard from "../Cards/ProductCard.astro";
+---
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Nuestros Productos</h2>
+            <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                En Printur, ofrecemos una amplia gama de productos impresos para satisfacer las necesidades de nuestros clientes. 
+                Desde carteles y folletos hasta tarjetas y más, contamos con los equipos y tecnología necesarios para brindarte la mejor calidad en impresión.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <ProductCard 
+                title="Carteles" 
+                description="Impresión de carteles en alta calidad para eventos, promociones, conciertos y más. Perfectos para llamar la atención de tu audiencia." 
+                buttonText="Ver más" 
+            />
+            <ProductCard 
+                title="Folletos" 
+                description="Diseño e impresión profesional de folletos para presentaciones, informes, catálogos y material promocional." 
+                buttonText="Ver más" 
+            />
+            <ProductCard 
+                title="Tarjetas" 
+                description="Tarjetas de presentación, invitaciones y más. Personalizables con diferentes acabados y materiales de alta calidad." 
+                buttonText="Ver más" 
+            />
+        </div>
+    </div>
+</section>

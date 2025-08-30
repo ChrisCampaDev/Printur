@@ -1,0 +1,39 @@
+
+<style>
+    @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .gradient-text {
+        background: linear-gradient(90deg, #3b82f6, #6366f1, #3b82f6);
+        background-size: 200% auto;
+        color: #0000;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradient 3s ease infinite;
+    }
+    
+    .gradient-text:hover {
+        animation: gradient 1.5s ease infinite;
+    }
+</style>
+
+<nav class="bg-white shadow-lg rounded-xl max-w-7xl px-6 py-2 z-50 fixed left-1/2 top-4 -translate-x-1/2 w-[calc(100%-2rem)]">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="text-2xl mb-2 md:mb-0">
+            <h1 class="font-bold">
+                <a href="/" class="gradient-text hover:opacity-90 transition-opacity">
+                    Printur3D
+                </a>
+            </h1>
+        </div>
+        <ul class="flex gap-6 text-blue-700 text-xl font-medium py-2">
+            <li><a href="/" class="hover:text-blue-900 transition-colors font-medium">Inicio</a></li>
+            <li><a href="/nosotros" class="hover:text-blue-900 transition-colors font-medium">Nosotros</a></li>
+            <li><a href="/contacto" class="hover:text-blue-900 transition-colors font-medium">Contacto</a></li>
+        </ul>
+    </div>
+</nav>

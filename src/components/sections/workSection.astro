@@ -1,0 +1,40 @@
+---
+import WorkCard from "../Cards/WorkCard.astro";
+const workSteps = [
+  {
+    title: 'Solicitud',
+    description: 'Comparte los detalles de tu proyecto y recibe una cotización personalizada en poco tiempo.',
+    stepNumber: 1
+  },
+  {
+    title: 'Revisión',
+    description: 'Revisa y aprueba la muestra digital antes de proceder con la producción.',
+    stepNumber: 2
+  },
+  {
+    title: 'Entrega',
+    description: 'Recibe tu pedido final con la más alta calidad y puntualidad garantizada.',
+    stepNumber: 3
+  }
+];
+---
+
+
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Nuestro Proceso</h2>
+      <p class="mt-4 text-xl text-gray-600">Sencillo, rápido y enfocado en la calidad</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {workSteps.map(step => (
+        <WorkCard 
+          title={step.title}
+          description={step.description}
+          stepNumber={step.stepNumber}
+        />
+      ))}
+    </div>
+  </div>
+</section>

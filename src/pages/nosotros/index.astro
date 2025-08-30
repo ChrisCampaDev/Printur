@@ -1,0 +1,148 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const teamMembers = [
+  {
+    name: "Carlos Martínez",
+    role: "Fundador & CEO",
+    bio: "Apasionado por la tecnología de impresión 3D con más de 10 años de experiencia en el sector.",
+    image: "/images/team/carlos.jpg"
+  },
+  {
+    name: "Ana Rodríguez",
+    role: "Diseñadora 3D",
+    bio: "Especialista en modelado 3D y diseño paramétrico con un ojo excepcional para el detalle.",
+    image: "/images/team/ana.jpg"
+  },
+  {
+    name: "David López",
+    role: "Ingeniero de Producción",
+    bio: "Experto en optimización de procesos de impresión y control de calidad.",
+    image: "/images/team/david.jpg"
+  }
+];
+
+const values = [
+  {
+    title: "Innovación",
+    description: "Siempre buscamos las últimas tecnologías y técnicas de impresión 3D.",
+    icon: "💡"
+  },
+  {
+    title: "Calidad",
+    description: "Cada pieza pasa por rigurosos controles de calidad antes de ser entregada.",
+    icon: "✨"
+  },
+  {
+    title: "Sostenibilidad",
+    description: "Utilizamos materiales ecológicos y procesos de producción responsables.",
+    icon: "🌱"
+  },
+  {
+    title: "Enfoque al Cliente",
+    description: "Tus necesidades son nuestra prioridad número uno.",
+    icon: "🤝"
+  }
+];
+---
+
+<Layout>
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20 h-[600px] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">Sobre Nosotros</h1>
+      <p class="text-xl md:text-2xl max-w-3xl mx-auto">Imprimiendo el futuro, capa por capa, desde 2018</p>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
+  </section>
+
+  <!-- Nuestra Historia -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Nuestra Historia</h2>
+          <div class="space-y-4 text-gray-600">
+            <p>En Printur3D, comenzamos como un pequeño taller con una sola impresora 3D y un gran sueño: hacer que la impresión 3D sea accesible para todos. Lo que comenzó como un proyecto de pasión en un garaje se ha convertido en un referente en el sector de la fabricación aditiva.</p>
+            <p>Hoy, contamos con un equipo de expertos apasionados y la tecnología más avanzada para ofrecer soluciones personalizadas a nuestros clientes en toda la región.</p>
+            <p>Nuestro compromiso con la excelencia y la innovación nos ha permitido trabajar en proyectos diversos, desde prototipos industriales hasta piezas personalizadas para el hogar.</p>
+          </div>
+        </div>
+        <div class="bg-gray-100 rounded-2xl overflow-hidden shadow-xl">
+          <img 
+            src="/images/about/workshop.jpg" 
+            alt="Nuestro taller de impresión 3D" 
+            class="w-full h-auto object-cover"
+            width="600"
+            height="400"
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nuestro Equipo -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-gray-900">Conoce a Nuestro Equipo</h2>
+        <p class="mt-4 text-xl text-gray-600">Profesionales apasionados por la impresión 3D</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {teamMembers.map(member => (
+          <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div class="h-64 bg-gray-200 overflow-hidden">
+              <img 
+                src={member.image} 
+                alt={member.name}
+                class="w-full h-full object-cover"
+                width="400"
+                height="400"
+              >
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900">{member.name}</h3>
+              <p class="text-blue-600 font-medium">{member.role}</p>
+              <p class="mt-3 text-gray-600">{member.bio}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Nuestros Valores -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-gray-900">Nuestros Valores</h2>
+        <p class="mt-4 text-xl text-gray-600">Principios que guían nuestro trabajo diario</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {values.map((value, index) => (
+          <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
+            <div class="text-4xl mb-4">{value.icon}</div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">{value.title}</h3>
+            <p class="text-gray-600">{value.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold mb-6">¿Listo para hacer realidad tu proyecto?</h2>
+      <p class="text-xl mb-8 max-w-3xl mx-auto">Contáctanos hoy mismo y descubre cómo podemos ayudarte con tus necesidades de impresión 3D.</p>
+      <a 
+        href="/contacto" 
+        class="inline-block bg-white text-blue-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors duration-300"
+      >
+        Contáctanos
+      </a>
+    </div>
+  </section>
+</Layout>
