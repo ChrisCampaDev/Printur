@@ -7,21 +7,223 @@ interface Props {
 }
 
 const { imagen, title, description, buttonText } = Astro.props;
+const cardId = `card-${Math.random().toString(36).substr(2, 9)}`;
+const modalId = `modal-${Math.random().toString(36).substr(2, 9)}`;
+const zoomBtnId = `zoom-${Math.random().toString(36).substr(2, 9)}`;
 
 ---
 
-<article class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-100 flex flex-col h-full">
-   
-    <div class="h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center overflow-hidden">
+<article id={cardId} class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-100 flex flex-col h-full">
+    <!-- Contenedor de la imagen con efecto hover y botón de zoom -->
+    <div class="relative h-64 bg-gradient-to-br from-blue-50 to-blue-100 overflow-hidden">
         <img 
             src={imagen}
-            alt={title} 
+            alt="" 
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
+            aria-hidden="true"
         />
+        
+        <!-- Botón de zoom -->
+        <button 
+            type="button" 
+            id={zoomBtnId}
+            class="absolute top-2 right-2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label={`Ampliar imagen de ${title}`}
+            aria-haspopup="dialog"
+            aria-controls={modalId}
+            aria-expanded="false"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+            </svg>
+            <span class="sr-only">Ampliar imagen de {title}</span>
+        </button>
+        
+        <!-- Overlay con descripción que aparece al hacer hover -->
+        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+            <div class="text-white">
+                <p class="text-sm line-clamp-3">{description}</p>
+            </div>
+        </div>
     </div>
-    <div class="p-6 flex-1 flex flex-col">
-        <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">{title}</h2>
-        <p class="text-gray-600 mb-6 flex-1">{description}</p>
+    
+    <!-- Contenido de la tarjeta -->
+    <div class="p-4 flex-1 flex flex-col">
+        <h2 class="text-lg font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">{title}</h2>
+        <div class="mt-auto">
+            <button 
+                type="button" 
+                class="w-full mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+                {buttonText}
+            </button>
+        </div>
     </div>
+    
+    <!-- Modal para la imagen en tamaño completo -->
+    <div 
+        id={modalId}
+        class="hidden fixed inset-0 z-50 overflow-auto bg-black/90 p-4"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`${modalId}-title`}
+        aria-describedby={`${modalId}-desc`}
+        tabindex="-1"
+    >
+        <div class="relative w-full h-full flex items-center justify-center">
+            <button 
+                type="button" 
+                class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-white rounded-full p-1"
+                aria-label="Cerrar modal"
+                data-close-modal
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span class="sr-only">Cerrar modal</span>
+            </button>
+            
+            <div class="relative max-w-4xl w-full max-h-[90vh] flex flex-col">
+                <div class="relative flex-1 overflow-hidden rounded-lg bg-black">
+                    <img 
+                        src={imagen}
+                        alt=""
+                        class="w-full h-auto max-h-[70vh] object-contain"
+                        aria-hidden="true"
+                    />
+                    <div id={`${modalId}-content`} class="bg-black/70 text-white p-4">
+                        <h2 id={`${modalId}-title`} class="text-xl font-bold mb-2">{title}</h2>
+                        <p id={`${modalId}-desc`} class="text-gray-200">{description}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Esperar a que el DOM esté completamente cargado
+        document.addEventListener('astro:page-load', () => {
+            const card = document.getElementById('${cardId}');
+            const zoomBtn = document.getElementById('${zoomBtnId}');
+            const modal = document.getElementById('${modalId}');
+            
+            if (!card || !zoomBtn || !modal) return;
+            
+            const closeBtn = modal.querySelector('[data-close-modal]');
+            const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+            let firstFocusableElement: HTMLElement | null = null, 
+                lastFocusableElement: HTMLElement | null = null;
+            
+            // Función para abrir el modal
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                
+                // Enfocar el primer elemento enfocable
+                const focusableContent = Array.from(modal.querySelectorAll<HTMLElement>(focusableElements)).filter(el => el.offsetParent !== null); // Filter out hidden elements
+                firstFocusableElement = focusableContent[0] || null;
+                lastFocusableElement = focusableContent[focusableContent.length - 1] || null;
+                firstFocusableElement.focus();
+                
+                // Agregar evento de teclado para el trap de foco
+                modal.addEventListener('keydown', trapFocus);
+                
+                // Actualizar estado ARIA
+                zoomBtn.setAttribute('aria-expanded', 'true');
+                modal.removeAttribute('inert');
+                modal.setAttribute('aria-hidden', 'false');
+            };
+            
+            // Función para cerrar el modal
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                
+                // Enfocar el botón que abrió el modal
+                zoomBtn.focus();
+                
+                // Remover evento de teclado
+                modal.removeEventListener('keydown', trapFocus);
+                
+                // Actualizar estado ARIA
+                zoomBtn.setAttribute('aria-expanded', 'false');
+                modal.setAttribute('inert', '');
+                modal.setAttribute('aria-hidden', 'true');
+            };
+            
+            // Función para atrapar el foco dentro del modal
+            const trapFocus = (e: KeyboardEvent) => {
+                if (e.key !== 'Tab' || !firstFocusableElement || !lastFocusableElement) return;
+                
+                const activeElement = document.activeElement;
+                
+                if (e.shiftKey) {
+                    if (activeElement === firstFocusableElement) {
+                        e.preventDefault();
+                        lastFocusableElement.focus();
+                    }
+                } else {
+                    if (activeElement === lastFocusableElement) {
+                        e.preventDefault();
+                        firstFocusableElement.focus();
+                    }
+                }
+                
+                // Handle Escape key press to close modal
+                if ((e as KeyboardEvent).key === 'Escape') {
+                    closeModal();
+                }
+            };
+            
+            // Event Listeners
+            zoomBtn.addEventListener('click', openModal);
+            
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeModal);
+            }
+            
+            // Cerrar al hacer clic fuera del contenido del modal
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Inicializar el modal como accesible
+            modal.setAttribute('aria-hidden', 'true');
+            modal.setAttribute('inert', '');
+            
+            // Manejar cambios en la visibilidad del modal
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'class') {
+                        const isHidden = modal.classList.contains('hidden');
+                        document.documentElement.style.overflow = isHidden ? '' : 'hidden';
+                        modal.setAttribute('aria-hidden', isHidden ? 'true' : 'false');
+                        
+                        if (isHidden) {
+                            modal.setAttribute('inert', '');
+                        } else {
+                            modal.removeAttribute('inert');
+                        }
+                    }
+                });
+            });
+            
+            observer.observe(modal, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+            
+            // Limpiar al desmontar el componente
+            return () => {
+                observer.disconnect();
+                modal.removeEventListener('keydown', trapFocus);
+                zoomBtn.removeEventListener('click', openModal);
+                if (closeBtn) closeBtn.removeEventListener('click', closeModal);
+                modal.removeEventListener('click', closeModal);
+            };
+        });
+    </script>
 </article>
