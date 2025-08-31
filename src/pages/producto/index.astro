@@ -1,0 +1,164 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/Cards/ProductCard.astro';
+
+// Define the product type for TypeScript
+type Product = {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  details: string[];
+  price: string;
+};
+
+// Product data (same as in [name].astro for consistency)
+const products: Product[] = [
+  {
+    id: 'accesorios-decorativos',
+    name: 'Accesorios decorativos',
+    description: 'Impresión de accesorios decorativos para tu mesa de trabajo o adornar tu casa.',
+    image: '/algo.jpeg',
+    details: [
+      'Materiales de alta durabilidad',
+      'Variedad de colores disponibles',
+      'Personalización disponible'
+    ],
+    price: 'Consultar precios'
+  },
+  {
+    id: 'figuras-de-accion',
+    name: 'Figuras de acción',
+    description: 'Diseño e impresión profesional de figuras de acción para adornar tu casa.',
+    image: '/miniatura.jpeg',
+    details: [
+      'Diseños personalizados',
+      'Alta precisión en los detalles',
+      'Pintura a mano opcional'
+    ],
+    price: 'Consultar precios'
+  },
+  {
+    id: 'accesorios-empresariales',
+    name: 'Accesorios Empresariales',
+    description: 'Impresión de accesorios empresariales para tu oficina o lugar de trabajo.',
+    image: '/accesorio.jpg',
+    details: [
+      'Logotipo personalizado',
+      'Mínimo de pedido: 10 unidades',
+      'Embalaje corporativo'
+    ],
+    price: 'Consultar precios'
+  },
+  {
+    id: 'llaveros',
+    name: 'Llaveros',
+    description: 'Llaveros personalizados con diseño 3D. Perfectos para regalos promocionales.',
+    image: '/llavero.jpeg',
+    details: [
+      'Diseños personalizados',
+      'Diferentes formas y tamaños',
+      'Material resistente'
+    ],
+    price: 'Consultar precios'
+  },
+  {
+    id: 'regalos',
+    name: 'Regalos Personalizados',
+    description: 'Regalos únicos impresos en 3D para ocasiones especiales.',
+    image: '/regalo.jpeg',
+    details: [
+      'Diseños personalizados',
+      'Empaque para regalo incluido',
+      'Tarjeta personalizada'
+    ],
+    price: 'Consultar precios'
+  },
+  {
+    id: 'maquetas',
+    name: 'Maquetas',
+    description: 'Maquetas arquitectónicas y de productos impresas en 3D con alta precisión.',
+    image: '/maqueta.jpeg',
+    details: [
+      'Escala personalizable',
+      'Materiales de alta calidad',
+      'Asesoría en diseño'
+    ],
+    price: 'Consultar precios'
+  }
+];
+
+// Set page metadata
+const title = 'Nuestros Productos | Printur';
+const description = 'Descubre nuestra colección de productos impresos en 3D. Desde accesorios decorativos hasta maquetas profesionales, encuentra el producto perfecto para ti.';
+---
+
+<Layout title={title} description={description}>
+  <main class="py-12 bg-gray-50 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Hero Section -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+          <span class="block">Nuestra Colección</span>
+          <span class="block text-blue-600 mt-2">Productos Impresos en 3D</span>
+        </h1>
+        <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-600">
+          Descubre nuestra exclusiva selección de productos personalizados impresos en 3D. 
+          Cada pieza está diseñada con precisión y fabricada con materiales de la más alta calidad.
+        </p>
+      </div>
+
+
+      <!-- Products Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        {products.map((product) => (
+          <div class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div class="relative h-64 bg-gray-100 overflow-hidden">
+              <img 
+                src={product.image} 
+                alt={product.name}
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <a 
+                  href={`/producto/${product.id}`}
+                  class="px-6 py-3 bg-white text-blue-600 font-medium rounded-full hover:bg-blue-50 transition-colors duration-200"
+                >
+                  Ver Detalles
+                </a>
+              </div>
+            </div>
+            <div class="p-6">
+              <h2 class="text-xl font-bold text-gray-900 mb-2">{product.name}</h2>
+              <p class="text-gray-600 mb-4">{product.description}</p>
+              <div class="flex items-center justify-between">
+                <span class="text-lg font-semibold text-blue-600">{product.price}</span>
+                <a 
+                  href={`/producto/${product.id}`}
+                  class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm font-medium"
+                >
+                  Ver más
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-blue-600 rounded-2xl p-8 md:p-12 text-center text-white">
+        <h2 class="text-3xl font-bold mb-4">¿Necesitas algo personalizado?</h2>
+        <p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+          Contáctanos para discutir tu proyecto personalizado. Estamos aquí para hacer realidad tus ideas en 3D.
+        </p>
+        <a 
+          href="/contacto" 
+          class="inline-block px-8 py-3 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-100 transition-colors duration-200"
+        >
+          Solicitar Cotización
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>

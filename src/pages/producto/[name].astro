@@ -1,0 +1,243 @@
+---
+import type { GetStaticPaths } from "astro";
+const Layout = (await import('../../layouts/Layout.astro')).default;
+
+type Product = {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  details: string[];
+  price: string;
+};
+
+export const getStaticPaths = (() => {
+  const products: Product[] = [
+    {
+      id: 'accesorios-decorativos',
+      name: 'Accesorios decorativos',
+      description: 'Impresión de accesorios decorativos para tu mesa de trabajo o adornar tu casa. Nuestros productos están hechos con materiales de alta calidad y terminaciones profesionales.',
+      image: '/algo.jpeg',
+      details: [
+        'Materiales de alta durabilidad',
+        'Variedad de colores disponibles',
+        'Personalización disponible',
+        'Tiempo de entrega: 2-3 días hábiles',
+        'Garantía de satisfacción'
+      ],
+      price: 'Consultar precios'
+    },
+    {
+      id: 'figuras-de-accion',
+      name: 'Figuras de acción',
+      description: 'Diseño e impresión profesional de figuras de acción para adornar tu casa. Perfectas para coleccionistas y amantes de los detalles únicos.',
+      image: '/miniatura.jpeg',
+      details: [
+        'Diseños personalizados',
+        'Alta precisión en los detalles',
+        'Pintura a mano opcional',
+        'Tiempo de entrega: 3-5 días hábiles',
+        'Empaque especial para regalo'
+      ],
+      price: 'Consultar precios'
+    },
+    {
+      id: 'accesorios-empresariales',
+      name: 'Accesorios Empresariales',
+      description: 'Impresión de accesorios empresariales para tu oficina o para decorar tu lugar de trabajo. Ideal para regalos corporativos.',
+      image: '/accesorio.jpg',
+      details: [
+        'Logotipo personalizado',
+        'Mínimo de pedido: 10 unidades',
+        'Embalaje corporativo',
+        'Tiempo de entrega: 5-7 días hábiles',
+        'Descuentos por volumen'
+      ],
+      price: 'Consultar precios'
+    },
+    {
+      id: 'llaveros',
+      name: 'Llaveros',
+      description: 'Llaveros personalizados con diseño 3D. Perfectos para regalos promocionales o recuerdos de eventos.',
+      image: '/llavero.jpeg',
+      details: [
+        'Diseños personalizados',
+        'Diferentes formas y tamaños',
+        'Material resistente',
+        'Tiempo de entrega: 2-3 días hábiles',
+        'Mínimo de pedido: 5 unidades'
+      ],
+      price: 'Consultar precios'
+    },
+    {
+      id: 'regalos',
+      name: 'Regalos Personalizados',
+      description: 'Regalos únicos impresos en 3D para ocasiones especiales. Desde aniversarios hasta cumpleaños, tenemos el detalle perfecto.',
+      image: '/regalo.jpeg',
+      details: [
+        'Diseños personalizados',
+        'Empaque para regalo incluido',
+        'Tarjeta personalizada',
+        'Tiempo de entrega: 3-4 días hábiles',
+        'Servicio de envío disponible'
+      ],
+      price: 'Consultar precios'
+    },
+    {
+      id: 'maquetas',
+      name: 'Maquetas',
+      description: 'Maquetas arquitectónicas y de productos impresas en 3D con altos estándares de calidad y precisión.',
+      image: '/maqueta.jpeg',
+      details: [
+        'Escala personalizable',
+        'Materiales de alta calidad',
+        'Asesoría en diseño',
+        'Tiempo de entrega: 5-10 días hábiles',
+        'Servicio de instalación disponible'
+      ],
+      price: 'Consultar precios'
+    }
+  ];
+
+  return products.map(product => ({
+    params: { name: product.id },  // Using id instead of name for the URL
+    props: { product }
+  }));
+}) satisfies GetStaticPaths;
+
+// Define the type for Astro.props
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props as Props;
+
+const title = `${product.name} | Printur`;
+const description = product.description.substring(0, 160) + '...';
+---
+
+<Layout title={title} description={description}>
+  <main class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="flex mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2">
+          <li>
+            <a href="/" class="text-gray-500 hover:text-gray-700">Inicio</a>
+          </li>
+          <li>
+            <span class="mx-2 text-gray-300">/</span>
+          </li>
+          <li class="text-gray-700 font-medium">{product.name}</li>
+        </ol>
+      </nav>
+
+      <!-- Product Section -->
+      <div class="lg:grid lg:grid-cols-2 lg:gap-8">
+        <!-- Product Image -->
+        <div class="mb-8 lg:mb-0">
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img 
+              src={product.image} 
+              alt={product.name} 
+              class="w-full h-auto object-cover"
+              loading="eager"
+            />
+          </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="lg:pl-8">
+          <h1 class="text-3xl font-extrabold text-gray-900 mb-4">{product.name}</h1>
+          
+          <div class="mb-6">
+            <p class="text-2xl font-semibold text-blue-600">{product.price}</p>
+          </div>
+          
+          <div class="prose max-w-none mb-8">
+            <p class="text-gray-600">{product.description}</p>
+          </div>
+
+          <div class="mb-8">
+            <h2 class="text-lg font-medium text-gray-900 mb-4">Características principales:</h2>
+            <ul class="space-y-2">
+              {product.details.map((detail) => (
+                <li class="flex items-start">
+                  <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span class="text-gray-600">{detail}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="mt-8">
+            <a 
+              href="/contacto" 
+              class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+            >
+              Solicitar cotización
+              <svg class="ml-2 -mr-1 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Products -->
+      <div class="mt-16">
+        <h2 class="text-2xl font-bold text-gray-900 mb-8">Productos relacionados</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            // Create a new array with the same structure as our products
+            {
+              id: 'figuras-de-accion',
+              name: 'Figuras de acción',
+              description: 'Diseño e impresión profesional de figuras de acción',
+              image: '/miniatura.jpeg'
+            },
+            {
+              id: 'accesorios-empresariales',
+              name: 'Accesorios Empresariales',
+              description: 'Impresión de accesorios empresariales',
+              image: '/accesorio.jpg'
+            },
+            {
+              id: 'llaveros',
+              name: 'Llaveros',
+              description: 'Llaveros personalizados con diseño 3D',
+              image: '/llavero.jpeg'
+            }
+          ]
+            .filter((p: { id: string }) => p.id !== product.id)
+            .slice(0, 3)
+            .map((relatedProduct: { id: string; name: string; description: string; image: string }) => (
+              <a 
+                href={`/producto/${relatedProduct.id}`} 
+                class="group block bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
+              >
+                <div class="h-48 overflow-hidden">
+                  <img 
+                    src={relatedProduct.image} 
+                    alt={relatedProduct.name}
+                    class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="p-4">
+                  <h3 class="text-lg font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
+                    {relatedProduct.name}
+                  </h3>
+                  <p class="mt-2 text-sm text-gray-500 line-clamp-2">
+                    {relatedProduct.description}
+                  </p>
+                </div>
+              </a>
+            ))}
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

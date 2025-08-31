@@ -1,27 +1,63 @@
 ---
-import ContactForm from "../../components/ContactForm.astro";
-import ContactInfo from "../../components/ContactInfo.astro";
+import ContactInfo from "../../components/Contact/ContactInfo.astro";
 import Layout from "../../layouts/Layout.astro";
+
+// Set page metadata
+const title = 'Contáctanos | Printur';
+const description = 'Estamos aquí para ayudarte con cualquier consulta sobre impresión 3D';
 ---
 
-<Layout>
-  <main class="min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16">
-        <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">Contáctanos</h1>
-        <p class="mt-4 text-xl text-gray-600">Estamos aquí para ayudarte con cualquier consulta sobre impresión 3D</p>
+<Layout {title} {description}>
+  <main class="min-h-screen bg-gray-50">
+    <!-- Hero Section -->
+    <div class="bg-blue-600 text-white py-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <h1 class="text-4xl font-bold sm:text-5xl mb-4">Contáctanos</h1>
+        <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+          ¿Tienes alguna pregunta sobre nuestros servicios de impresión 3D? Estamos aquí para ayudarte.
+        </p>
       </div>
-      
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      
-        <ContactForm />
-        <ContactInfo />
+    </div>
+
+    <!-- Contact Info -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="grid md:grid-cols-2">
+          <!-- Contact Information -->
+          <div class="p-8 md:p-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Información de contacto</h2>
+            <div class="space-y-6">
+              <ContactInfo />
+            </div>
+          </div>
+
+          <!-- Contact Form Placeholder -->
+          <div class="bg-gray-50 p-8 md:p-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Envíanos un mensaje</h2>
+            <p class="text-gray-600 mb-6">
+              Para consultas sobre pedidos personalizados o cualquier otra pregunta, no dudes en contactarnos.
+              Te responderemos lo antes posible.
+            </p>
+            <div class="text-center py-8">
+              <a 
+                href="https://wa.me/5355813428" 
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
+              >
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.498 14.382v3.3c0 .66.527 1.199 1.175 1.199h.03c.31 0 .61-.1.863-.287a1.2 1.2 0 00.432-.912v-8.02a1.106 1.106 0 00-.203-.634 1.07 1.07 0 00-.544-.462l-9.713-3.733c-.33-.127-.69-.13-1.022-.009a1.09 1.09 0 00-.682.798l-.006.02-1.447 5.5c-.09.34-.04.7.138 1.002.18.302.48.514.819.586l2.26.39a1.1 1.1 0 011.09 1.29l-.04.17-1.04 3.95a1.1 1.1 0 001.681 1.17l9.113-6.86z"/>
+                  <path d="M11.316 15.383l-.24 1.2a1.1 1.1 0 01-1.35.83l-3.3-.8a1.1 1.1 0 01-.83-1.35l.8-3.3a1.1 1.1 0 01.83-.8l1.2-.3a.5.5 0 01.61.36l.5 2a.5.5 0 01-.36.61l-.64.16.8 3.2 3.2-.8.16-.64a.5.5 0 01.61-.36l2 .5a.5.5 0 01.36.61l-.3 1.2a1.1 1.1 0 01-1.35.8l-2-.5a1.1 1.1 0 01-.8-1.35l.5-2z"/>
+                </svg>
+                Chatear por WhatsApp
+              </a>
+              <p class="mt-4 text-sm text-gray-500">
+                Horario de atención: Lunes a Viernes, 9:00 AM - 6:00 PM
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
-  
-  <!-- Map -->
-  <div class="h-96 w-full bg-gray-200">
-    <iframe src=""></iframe>
-  </div>
 </Layout>
