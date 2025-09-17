@@ -11,6 +11,18 @@ type Product = {
   price: string;
 };
 
+/**
+ * getStaticPaths is a function that returns an object with a single
+ * key called `paths`. The value of `paths` is an array of objects with
+ * two keys: `params` and `props`. `params` is an object with a single
+ * key-value pair, where the key is `name` and the value is the id of the
+ * product. `props` is an object with a single key-value pair, where the
+ * key is `product` and the value is the product object.
+ *
+ * This function is used by Astro to generate static pages for the products.
+ * It takes the array of products and maps it to an array of objects with the
+ * structure required by Astro.
+ */
 export const getStaticPaths = (() => {
   const products: Product[] = [
     {
@@ -117,7 +129,7 @@ const description = product.description.substring(0, 160) + '...';
 ---
 
 <Layout title={title} description={description}>
-  <main class="py-12 bg-gray-50">
+  <main class="py-12 bg-gray-50" data-astro-transition-scope="product">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Breadcrumb -->
       <nav class="flex mb-8" aria-label="Breadcrumb">
@@ -141,6 +153,7 @@ const description = product.description.substring(0, 160) + '...';
               src={product.image} 
               alt={product.name} 
               class="w-full h-auto object-cover"
+              data-astro-transition-key={`image-${product.id}`}
               loading="eager"
             />
           </div>
@@ -148,7 +161,7 @@ const description = product.description.substring(0, 160) + '...';
 
         <!-- Product Details -->
         <div class="lg:pl-8">
-          <h1 class="text-3xl font-extrabold text-gray-900 mb-4">{product.name}</h1>
+          <h1 class="text-3xl font-extrabold text-gray-900 mb-4" data-astro-transition-key={`title-${product.id}`}>{product.name}</h1>
           
           <div class="mb-6">
             <p class="text-2xl font-semibold text-blue-600">{product.price}</p>
@@ -223,11 +236,12 @@ const description = product.description.substring(0, 160) + '...';
                     src={relatedProduct.image} 
                     alt={relatedProduct.name}
                     class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                    data-astro-transition-key={`image-${relatedProduct.id}`}
                     loading="lazy"
                   />
                 </div>
                 <div class="p-4">
-                  <h3 class="text-lg font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
+                  <h3 class="text-lg font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-200" data-astro-transition-key={`title-${relatedProduct.id}`}>
                     {relatedProduct.name}
                   </h3>
                   <p class="mt-2 text-sm text-gray-500 line-clamp-2">

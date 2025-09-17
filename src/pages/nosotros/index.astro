@@ -35,14 +35,14 @@ const values = [
 ];
 ---
 
-<Layout title="Sobre Nosotros" 
+<Layout title="Sobre Nosotros"
   description="Imprimiendo el futuro, capa por capa"
 >
   <!-- Hero Section -->
-  <section class="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20 h-[600px] overflow-hidden">
+  <section class="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20 min-h-[600px] overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
-      <h1 class="text-4xl md:text-5xl font-bold mb-6">Sobre Nosotros</h1>
-      <p class="text-xl md:text-2xl max-w-3xl mx-auto">Imprimiendo el futuro, capa por capa</p>
+      <h1 class="text-4xl md:text-5xl font-bold mb-6" data-aos="fade-up">Sobre Nosotros</h1>
+      <p class="text-xl md:text-2xl max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="600">Imprimiendo el futuro, capa por capa</p>
     </div>
     <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
   </section>
@@ -51,18 +51,18 @@ const values = [
   <section class="py-20 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
       <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div>
+        <div data-aos="fade-right">
           <h2 class="text-3xl font-bold text-gray-900 mb-6">Nuestra Historia</h2>
           <div class="space-y-4 text-gray-600">
-            <p>En Printur3D, comenzamos como un pequeño taller con una sola impresora 3D y un gran sueño: hacer que la impresión 3D sea accesible para todos. Lo que comenzó como un proyecto de pasión en un garaje se ha convertido en un referente en el sector de la fabricación aditiva.</p>
-            <p>Hoy, contamos con mas experiencia y una tecnología más avanzada para ofrecer soluciones personalizadas a nuestros clientes en toda la región.</p>
-            <p>Nuestro compromiso con la excelencia y la innovación nos ha permitido trabajar en proyectos diversos, desde prototipos industriales hasta piezas personalizadas para el hogar.</p>
+            <p data-aos="fade-up" data-aos-delay="0">En Printur3D, comenzamos como un pequeño taller con una sola impresora 3D y un gran sueño: hacer que la impresión 3D sea accesible para todos. Lo que comenzó como un proyecto de pasión en un garaje se ha convertido en un referente en el sector de la fabricación aditiva.</p>
+            <p data-aos="fade-up" data-aos-delay="100">Hoy, contamos con mas experiencia y una tecnología más avanzada para ofrecer soluciones personalizadas a nuestros clientes en toda la región.</p>
+            <p data-aos="fade-up" data-aos-delay="200">Nuestro compromiso con la excelencia y la innovación nos ha permitido trabajar en proyectos diversos, desde prototipos industriales hasta piezas personalizadas para el hogar.</p>
           </div>
         </div>
-        <div class="bg-gray-100 rounded-2xl overflow-hidden shadow-xl">
-          <img 
-            src="/3dbanner.jpeg" 
-            alt="Nuestro taller de impresión 3D" 
+        <div class="bg-gray-100 rounded-2xl overflow-hidden shadow-xl" data-aos="fade-left">
+          <img
+            src="/3dbanner.jpeg"
+            alt="Nuestro taller de impresión 3D"
             class="w-full h-auto object-cover"
             width="600"
             height="400"
@@ -76,11 +76,13 @@ const values = [
   <section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="text-3xl font-bold text-gray-900">Conoce a Nuestro Equipo</h2>
-        <p class="mt-4 text-xl text-gray-600">Profesionales apasionados por la impresión 3D</p>
+        <h2 class="text-3xl font-bold text-gray-900" data-aos="fade-up">Conoce a Nuestro Equipo</h2>
+        <p class="mt-4 text-xl text-gray-600" data-aos="fade-up" data-aos-delay="100">Profesionales apasionados por la impresión 3D</p>
       </div>
-      
-      <Personal />
+
+      <div data-aos="fade-up" data-aos-delay="150">
+        <Personal />
+      </div>
     </div>
   </section>
 
@@ -88,13 +90,13 @@ const values = [
   <section class="py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="text-3xl font-bold text-gray-900">Nuestros Valores</h2>
-        <p class="mt-4 text-xl text-gray-600">Principios que guían nuestro trabajo diario</p>
+        <h2 class="text-3xl font-bold text-gray-900" data-aos="fade-up">Nuestros Valores</h2>
+        <p class="mt-4 text-xl text-gray-600" data-aos="fade-up" data-aos-delay="100">Principios que guían nuestro trabajo diario</p>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {values.map((value) => (
-          <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
+        {values.map((value, idx) => (
+          <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 text-center" data-aos="fade-up" data-aos-delay={String(idx * 100)}>
             <div class="text-4xl mb-4">{value.icon}</div>
             <h3 class="text-xl font-bold text-gray-900 mb-3">{value.title}</h3>
             <p class="text-gray-600">{value.description}</p>
@@ -107,11 +109,13 @@ const values = [
   <!-- CTA Section -->
   <section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl font-bold mb-6">¿Listo para hacer realidad tu proyecto?</h2>
-      <p class="text-xl mb-8 max-w-3xl mx-auto">Contáctanos hoy mismo y descubre cómo podemos ayudarte con tus necesidades de impresión 3D.</p>
-      <a 
-        href="/contacto" 
+      <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">¿Listo para hacer realidad tu proyecto?</h2>
+      <p class="text-xl mb-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">Contáctanos hoy mismo y descubre cómo podemos ayudarte con tus necesidades de impresión 3D.</p>
+      <a
+        href="/contacto"
         class="inline-block bg-white text-blue-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors duration-300"
+        data-aos="zoom-in"
+        data-aos-delay="200"
       >
         Contáctanos
       </a>

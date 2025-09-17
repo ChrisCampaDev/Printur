@@ -1,15 +1,15 @@
 ---
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
-import '../styles/global.css';
-import { ClientRouter } from 'astro:transitions';
-interface Props{
-  title: string;
-  description: string;
+import Footer from "../components/Footer.astro";
+import Navbar from "../components/Navbar.astro";
+import "../styles/global.css";
+
+import { ClientRouter } from "astro:transitions";
+interface Props {
+	title: string;
+	description: string;
 }
 
-const {title,description} = Astro.props
-
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
@@ -17,80 +17,139 @@ const {title,description} = Astro.props
 	<head>
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta charset="UTF-8" />
-    <meta name="generator" content={Astro.generator} />
+	<meta charset="UTF-8" />
+
+	<meta name="generator" content={Astro.generator} />
     <meta name="robots" content="index, follow">
-    
     <meta name="keywords" content="Impresión 3D, diseño, cuba, miniaturas, personalización, productos">
+
     <meta name="author" content="ChrisCampaDev">
     <meta name="theme-color" content="#000000">
-    
+
     <meta name="application-name" content="Printur3D">
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="msapplication-config" content="/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-    
-    <ClientRouter />
-		<title>{title}</title>
+
+	<title>{title}</title>
     <meta name="description" content={description}>
-		<script is:inline>
-      // Simple View Transitions setup
-      document.addEventListener('astro:page-load', () => {
-        // Add view-transition-name to main content
-        const main = document.querySelector('main');
-        if (main) {
-          main.style.viewTransitionName = 'page';
+
+    <!-- AOS (Animate On Scroll) CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+    <style>
+      /* Top progress bar */
+      .progress-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        z-index: 9999;
+        pointer-events: none;
+      }
+      .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #3b82f6, #6366f1);
+        transition: width 200ms ease;
+      }
+      body.nav-loading {
+        cursor: progress;
+      }
+      /* Optional fade on content during load */
+      body.nav-loading main, body.nav-loading nav, body.nav-loading footer {
+        filter: grayscale(10%) contrast(98%);
+      }
+    </style>
+  </head>
+  <body>
+    <ClientRouter/>
+    <div class="progress-container" aria-hidden="true">
+      <div id="route-progress" class="progress-bar"></div>
+    </div>
+    <Navbar/>
+        <slot />      
+    <Footer />
+
+    <!-- AOS (Animate On Scroll) JS via CDN -->
+    <script>
+      import AOS from 'aos';
+      import 'aos/dist/aos.css'; // You can also use <link> for styles
+      AOS.init(); 
+      // Initialize AOS on first load and after client router swaps
+      addEventListener('astro:page-load', () => {
+        const AOS = (window as any).AOS;
+        if (AOS && typeof AOS.init === 'function') {
+          AOS.init({ duration: 600, once: true, easing: 'ease-out-quart' });
         }
       });
+      addEventListener('astro:after-swap', () => {
+        const AOS = (window as any).AOS;
+        if (AOS && typeof AOS.refreshHard === 'function') {
+          AOS.refreshHard();
+        }
+      });
+
+      const bar = document.getElementById('route-progress');
+      let active = false;
+      let rafId = 0;
+
+      const start = () => {
+        if (active) return;
+        active = true;
+        document.body.classList.add('nav-loading');
+        if (bar) {
+          bar.style.opacity = '1';
+          bar.style.width = '0%';
+          // Simulate progress to 80%
+          let progress = 0;
+          const tick = () => {
+            if (!active) return;
+            progress = Math.min(progress + Math.random() * 10, 80);
+            bar.style.width = progress + '%';
+            rafId = requestAnimationFrame(() => setTimeout(tick, 150));
+          };
+          tick();
+        }
+      };
+
+      const done = () => {
+        if (!active) return;
+        active = false;
+        document.body.classList.remove('nav-loading');
+        if (bar) {
+          bar.style.width = '100%';
+          setTimeout(() => {
+            bar.style.opacity = '0';
+            bar.style.width = '0%';
+          }, 200);
+        }
+        if (rafId) cancelAnimationFrame(rafId);
+      };
+
+      // Astro Client Router navigation hooks
+      addEventListener('astro:before-swap', start);
+      addEventListener('astro:after-swap', done);
+      addEventListener('astro:page-load', done);
+
+      // Progressive enhancement for View Transitions on link clicks
+      document.addEventListener('click', (e) => {
+        const anchor = (e.target as HTMLElement)?.closest?.('a[href^="/"]') as HTMLAnchorElement | null;
+        if (!anchor) return;
+        const url = new URL(anchor.href, location.href);
+        const isSameOrigin = url.origin === location.origin;
+        const isModified = (e as MouseEvent).metaKey || (e as MouseEvent).ctrlKey || (e as MouseEvent).shiftKey || (e as MouseEvent).altKey || (e as MouseEvent).button !== 0;
+        if (!isSameOrigin || isModified) return;
+
+        // If browser supports native View Transitions, allow a smoother start
+        if ((document as any).startViewTransition) {
+          (document as any).startViewTransition(() => {
+            // Nothing needed here because Astro Client Router will handle the swap
+          });
+        }
+      }, { capture: true });
     </script>
-    <style>
-      @keyframes fade-in {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-      
-      @keyframes fade-out {
-        from { opacity: 1; }
-        to { opacity: 0; }
-      }
-      
-      @keyframes slide-from-right {
-        from { transform: translateX(30px); }
-      }
-      
-      @keyframes slide-to-left {
-        to { transform: translateX(-30px); }
-      }
-      
-      :root {
-        view-transition-name: none;
-      }
-      
-      ::view-transition-old(root) {
-        animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out,
-                   300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
-      }
-      
-      ::view-transition-new(root) {
-        animation: 300ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-                   300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
-      }
-      
-      ::view-transition-old(page),
-      ::view-transition-new(page) {
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-     }
-    </style>
-	</head>
-	<body>
-		<Navbar/>
-		<slot />
-		<Footer	/>
-	</body>
+  </body>
 </html>
-
-
